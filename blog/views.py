@@ -1,15 +1,27 @@
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CommentForm
 from .models import Post
 
+
+
+class login(generic.ListView):
+    template_name = "registration/login.html"
 
 class PostList(generic.ListView):
     queryset = Post.objects.filter(status=1).order_by("-created_on")
     template_name = "index.html"
     paginate_by = 3
 
+class PostListUser(LoginRequiredMixin, generic.ListView):
+    '''Vista para mostrar los posts de un usuario'''
+    def get_queryset(self):
+        user = self.request.user
+        return Post.objects.filter(author=user).order_by("-created_on")
+
+    template_name = "listado_usuario.html"
+    paginate_by = 3
 
 class PostDetail(generic.DetailView):
     model = Post
