@@ -7,7 +7,18 @@ from .models import Post
 
 
 class login(generic.ListView):
+    queryset = Post.objects.filter(status=1).order_by("-created_on")
     template_name = "registration/login.html"
+
+class login_datos (generic.ListView):
+    queryset = Post.objects.filter(status=1).order_by("-created_on")
+    template_name = "registration/login_datos.html"
+
+
+class logout(generic.ListView):
+    queryset = Post.objects.filter(status=1).order_by("-created_on")
+    template_name = "registration/logout.html"
+
 
 class PostList(generic.ListView):
     queryset = Post.objects.filter(status=1).order_by("-created_on")
