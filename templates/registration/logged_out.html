@@ -1,8 +1,9 @@
+
 {% extends "base.html" %}
 
 {% block content %}
- 
-<p><a href="{% url 'logout' %}">Lost password?</a></p>
-    
+  <p>Logged out!</p>
+  <a href="{% url 'login'%}">Click here to login again.</a>
+  <br/>
+  <a href="{% url 'home'%}">Click here to go back to the home page.</a>
 {% endblock %}
-

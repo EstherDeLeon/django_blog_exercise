@@ -3,21 +3,10 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CommentForm
 from .models import Post
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import View
 
-
-
-class login(generic.ListView):
-    queryset = Post.objects.filter(status=1).order_by("-created_on")
-    template_name = "registration/login.html"
-
-class login_datos (generic.ListView):
-    queryset = Post.objects.filter(status=1).order_by("-created_on")
-    template_name = "registration/login_datos.html"
-
-
-class logout(generic.ListView):
-    queryset = Post.objects.filter(status=1).order_by("-created_on")
-    template_name = "registration/logout.html"
 
 
 class PostList(generic.ListView):
@@ -68,3 +57,13 @@ def post_detail(request, slug):
             "comment_form": comment_form,
         },
     )
+
+@login_required
+def my_view(request):
+    # Code here...
+    pass
+
+
+class MyView(LoginRequiredMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
